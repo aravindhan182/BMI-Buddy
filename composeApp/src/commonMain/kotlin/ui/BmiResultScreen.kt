@@ -30,6 +30,7 @@ import androidx.navigation.NavHostController
 import bmibuddy.composeapp.generated.resources.Res
 import bmibuddy.composeapp.generated.resources.undraw_functions_re_alho
 import org.jetbrains.compose.resources.painterResource
+import util.roundTo
 
 
 @OptIn(ExperimentalAnimationApi::class)
@@ -41,7 +42,6 @@ fun BmiResultScreen(
 ) {
     var resultMessage by remember { mutableStateOf("") }
     var targetColor by remember { mutableStateOf(Color.Gray) }
-
     // Update the message and color based on the BMI value
     LaunchedEffect(bmiValue) {
         when {
@@ -101,11 +101,11 @@ fun BmiResultScreen(
                 .size(500.dp),
             contentDescription = ""
         )
-        Text(text = "BMI Result: $bmiValue", fontFamily = FontFamily.Serif, fontSize = 32.sp, fontWeight = FontWeight.SemiBold)
+        Text(text = "BMI Result: ${bmiValue.roundTo(2)}", fontFamily = FontFamily.Serif, fontSize = 32.sp, fontWeight = FontWeight.SemiBold)
         Spacer(Modifier.padding(4.dp))
         Text(
             text = resultMessage,
-            color = animatedColor, fontFamily = FontFamily.Serif, fontSize = 32.sp, fontWeight = FontWeight.SemiBold
+            color = animatedColor, fontFamily = FontFamily.Serif, fontSize = 16.sp, fontWeight = FontWeight.SemiBold
         )
     }
 }

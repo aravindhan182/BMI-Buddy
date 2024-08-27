@@ -92,6 +92,8 @@ class BmiCalculateViewModel : ViewModel() {
                     _bmiCalculateError.value = "Give valid age"
                 } else if (bmiView.weight <= 0) {
                     _bmiCalculateError.value = "Give valid weight"
+                } else if (bmiView.heightInch.isEmpty()) {
+                    _bmiCalculateError.value = "Inch shouldn't be a empty"
                 } else if (isNumeric(bmiView.heightFt) && bmiView.heightFt.toInt() > 0 || isNumeric(
                         bmiView.heightInch
                     ) && bmiView.heightInch.toInt() > 0

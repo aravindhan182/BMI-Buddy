@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">BmiBuddy</string>
+    <string name="bmi_calculate">Bmi Calculate</string>
+    <string name="bmi_result">Bmi Result</string>
+    <string name="desktop_platform">Desktop</string>
+</resources>

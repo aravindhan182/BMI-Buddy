@@ -70,43 +70,60 @@ class BmiCalculateViewModel : ViewModel() {
         val bmiView = _bmiCalculateMutableView.value
         when (bmiView.heightIn) {
             HeightIn.Centimeter -> {
-                if (bmiView.age <= 0) {
-                    _bmiCalculateError.value = "Give valid age"
-                } else if (bmiView.weight <= 0) {
-                    _bmiCalculateError.value = "Give valid weight"
-                } else if (isNumeric(bmiView.heightInCm) && bmiView.heightInCm.toDouble() > 0.0) {
-                    _bmiCalculateError.value = null
-                    val heightInMeter = _bmiCalculateMutableView.value.heightInCm.toDouble() / 100
-                    val bmi =
-                        _bmiCalculateMutableView.value.weight / (heightInMeter * heightInMeter)
+                when {
+                    bmiView.age <= 0 -> {
+                        _bmiCalculateError.value = "Give valid age"
+                    }
 
-                    _bmiCalculatedValue.value = bmi
+                    bmiView.weight <= 0 -> {
+                        _bmiCalculateError.value = "Give valid weight"
+                    }
 
-                } else {
-                    _bmiCalculateError.value = "Give a valid height"
+                    isNumeric(bmiView.heightInCm) && bmiView.heightInCm.toDouble() > 0.0 -> {
+                        _bmiCalculateError.value = null
+                        val heightInMeter =
+                            _bmiCalculateMutableView.value.heightInCm.toDouble() / 100
+                        val bmi =
+                            _bmiCalculateMutableView.value.weight / (heightInMeter * heightInMeter)
+
+                        _bmiCalculatedValue.value = bmi
+                    }
+
+                    else -> {
+                        _bmiCalculateError.value = "Give a valid height"
+                    }
                 }
             }
 
             HeightIn.Feet -> {
-                if (bmiView.age <= 0) {
-                    _bmiCalculateError.value = "Give valid age"
-                } else if (bmiView.weight <= 0) {
-                    _bmiCalculateError.value = "Give valid weight"
-                } else if (bmiView.heightInch.isEmpty()) {
-                    _bmiCalculateError.value = "Inch shouldn't be a empty"
-                } else if (isNumeric(bmiView.heightFt) && bmiView.heightFt.toInt() > 0 || isNumeric(
+                when {
+                    bmiView.age <= 0 -> {
+                        _bmiCalculateError.value = "Give valid age"
+                    }
+
+                    bmiView.weight <= 0 -> {
+                        _bmiCalculateError.value = "Give valid weight"
+                    }
+
+                    bmiView.heightInch.isEmpty() -> {
+                        _bmiCalculateError.value = "Inch shouldn't be a empty"
+                    }
+
+                    isNumeric(bmiView.heightFt) && bmiView.heightFt.toInt() > 0 || isNumeric(
                         bmiView.heightInch
-                    ) && bmiView.heightInch.toInt() > 0
-                ) {
-                    _bmiCalculateError.value = null
-                    val totalInches =
-                        _bmiCalculateMutableView.value.heightFt.toDouble() * 12 + _bmiCalculateMutableView.value.heightInch.toDouble()
-                    val heightInMeters = totalInches * 0.0254
-                    val bmi =
-                        _bmiCalculateMutableView.value.weight / (heightInMeters * heightInMeters)
-                    _bmiCalculatedValue.value = bmi
-                } else {
-                    _bmiCalculateError.value = "Give a valid height"
+                    ) && bmiView.heightInch.toInt() > 0 -> {
+                        _bmiCalculateError.value = null
+                        val totalInches =
+                            _bmiCalculateMutableView.value.heightFt.toDouble() * 12 + _bmiCalculateMutableView.value.heightInch.toDouble()
+                        val heightInMeters = totalInches * 0.0254
+                        val bmi =
+                            _bmiCalculateMutableView.value.weight / (heightInMeters * heightInMeters)
+                        _bmiCalculatedValue.value = bmi
+                    }
+
+                    else -> {
+                        _bmiCalculateError.value = "Give a valid height"
+                    }
                 }
             }
         }
